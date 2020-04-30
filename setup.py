@@ -9,7 +9,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
   name = 'bayes_tda',
   packages = ['bayes_tda'],   
-  version = '0.2',      
+  version = '0.3',      
   license='MIT',        
   description = 'Point process model for Bayesian inference with persistence diagrams.',
   long_description = long_description,
@@ -17,12 +17,11 @@ setup(
   author = 'Christopher Oballe',
   author_email = 'coballejr@gmail.com',      
   url = 'https://github.com/coballejr/bayes_tda/',
-  download_url = 'https://github.com/coballejr/bayes_tda/archive/v_02.tar.gz',
+  download_url = 'https://github.com/coballejr/bayes_tda/archive/v_03.tar.gz',
   keywords = ['Persistent Homology', 'Topological Data Analysis', 'Bayesian','Point process', 'Poisson process'],   # Keywords that define your package best
   install_requires=[            
           'numpy',
-          'scipy',
-          'itertools'
+          'scipy'
       ],
   classifiers=[
     'Development Status :: 3 - Alpha',      
