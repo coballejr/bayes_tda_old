@@ -10,13 +10,12 @@ The model relies heavily on marked Poisson processes and mixed Gaussian assumpti
 
 author: Chris Oballe
 created: 3/21/2019
-last modified: 4/12/2019
+last modified: 4/30/2020
 '''
 
 # imports
 import numpy as np
 from scipy.stats import multivariate_normal as mvn
-import itertools
 #---------
 
 class WedgeGaussian:
@@ -95,7 +94,7 @@ class Posterior:
         self.wscalars = [self.prior.weights[i]*mvn.pdf(x=self.Dy[j],mean = self.prior.mus[i],cov = self.prior.sigmas[i]+self.sy) for i in range(len(self.prior.weights)) for j in range(len(self.Dy))]
         self.pmeans = [(self.prior.sigmas[i]*np.array(Dy[j])+self.sy*np.array(self.prior.mus[i]))/(self.prior.sigmas[i]+self.sy) for i in range(len(self.prior.mus)) for j in range(len(self.Dy))]
         self.psigmas = [(self.prior.sigmas[i]*self.sy)/(self.prior.sigmas[i] + self.sy) for i in range(len(self.prior.sigmas)) for j in range(len(self.Dy))]
-        self.Qs = [1-(mvn.cdf([float('inf'),0],mean = self.pmeans[i], cov = self.psigmas[i])+ mvn.cdf([0,float('inf')],mean = self.pmeans[i], cov = self.psigmas[i]))+ mvn.cdf([0,0],mean = self.pmeans[i], cov = self.psigmas[i]) for i in range(len(self.pmeans))]
+        self.Qs = [1-(mvn.cdf([float('inf'),0],mean = self.pmeans[i], cov = self.psigmas[i]) - mvn.cdf([0,float('inf')],mean = self.pmeans[i], cov = self.psigmas[i]))+ mvn.cdf([0,0],mean = self.pmeans[i], cov = self.psigmas[i]) for i in range(len(self.pmeans))]
         self.alpha = alpha
         self.cluts = [self.clutter.eval(y) for y in self.Dy]*len(self.prior.mus)
         self.wQs = list(np.multiply(self.wscalars,self.Qs))
